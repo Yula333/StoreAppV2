@@ -6,12 +6,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @Entity
-public class Product {
+public class Product_ru {
 
     @Id
     @Column(name = "id")
@@ -25,9 +23,9 @@ public class Product {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "price")
+    @Column(name = "price_rub")
     @Min(value = 1, message = "Price should be greater than 0")
-    private int price;
+    private int price_rub;
 
     @Column(name = "created_at")
     @Temporal(TemporalType.DATE)
@@ -41,16 +39,20 @@ public class Product {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private Date updatedAt;
 
-    public Product() {
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="product_en_id", referencedColumnName = "id")
+    private Product_en product_en;
+
+    public Product_ru() {
     }
 
-    public Product(Integer id, String name, String description, int price, Date createdAt, Date updatedAt) {
-        this.id = id;
+    public Product_ru(String name, String description, int price_rub, Date createdAt, Date updatedAt, Product_en product_en) {
         this.name = name;
         this.description = description;
-        this.price = price;
+        this.price_rub = price_rub;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.product_en = product_en;
     }
 
     public Integer getId() {
@@ -77,12 +79,12 @@ public class Product {
         this.description = description;
     }
 
-    public int getPrice() {
-        return price;
+    public int getPrice_rub() {
+        return price_rub;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public void setPrice_rub(int price_rub) {
+        this.price_rub = price_rub;
     }
 
     public Date getCreatedAt() {
@@ -99,5 +101,13 @@ public class Product {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Product_en getProduct_en() {
+        return product_en;
+    }
+
+    public void setProduct_en(Product_en product_en) {
+        this.product_en = product_en;
     }
 }

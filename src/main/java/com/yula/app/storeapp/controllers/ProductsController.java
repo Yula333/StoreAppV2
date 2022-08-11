@@ -1,6 +1,6 @@
 package com.yula.app.storeapp.controllers;
 
-import com.yula.app.storeapp.models.Product;
+import com.yula.app.storeapp.models.Product_ru;
 import com.yula.app.storeapp.services.ProductsService;
 import com.yula.app.storeapp.util.ProductErrorResponse;
 import com.yula.app.storeapp.util.ProductNotCreatedException;
@@ -28,19 +28,19 @@ public class ProductsController {
 
     //запрос всего списка продуктов
     @GetMapping("/products")
-    public List<Product> getProducts() {
-        return productsService.findAll();       //Jackson конвертирует эти объекты в JSON
+    public List<Product_ru> getProducts() {
+        return productsService.findAll();   //Jackson конвертирует эти объекты в JSON
     }
 
     //запрос продукта по id
     @GetMapping("/products/{id}")
-    public Product getProduct(@PathVariable("id") int id){
+    public Product_ru getProduct(@PathVariable("id") int id){
         return productsService.findOne(id);
     }
 
     //создание и сохранение в БД нового продукта
     @PostMapping("/products")
-    public ResponseEntity<HttpStatus> create(@RequestBody @Valid Product product, BindingResult bindingResult){
+    public ResponseEntity<HttpStatus> create(@RequestBody @Valid Product_ru product_ru, BindingResult bindingResult){
         // если продукт не корректный, не прошел валидацию
         if(bindingResult.hasErrors()) {
             StringBuilder errorMsg = new StringBuilder();
@@ -54,14 +54,14 @@ public class ProductsController {
             throw new ProductNotCreatedException(errorMsg.toString());
         }
             //если продукт валидный сохраняем в БД
-        productsService.save(product);
+        productsService.save(product_ru);
         // отправляем HTTP ответ с пустым телом и статусом 200 - ОК
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     //изменение продукта в БД
     @PutMapping("/products")
-    public ResponseEntity<HttpStatus> updateProduct(@RequestBody @Valid Product product, BindingResult bindingResult){
+    public ResponseEntity<HttpStatus> updateProduct(@RequestBody @Valid Product_ru product, BindingResult bindingResult){
         // если продукт не корректный, не прошел валидацию
         if(bindingResult.hasErrors()) {
             StringBuilder errorMsg = new StringBuilder();
@@ -101,7 +101,5 @@ public class ProductsController {
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
-
-
 
 }
