@@ -5,14 +5,13 @@ import com.yula.app.storeapp.repositories.ProductsRepository;
 import com.yula.app.storeapp.util.ProductNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional(readOnly = true)
 public class ProductsService {
 
     //внедрим репозиторий
@@ -35,14 +34,12 @@ public class ProductsService {
     }
 
     //метод для сохранения продукта в БД
-    @Transactional
     public void save(Product_ru product_ru){
         product_ru.setCreatedAt(new Date());
         productsRepository.save(product_ru);
     }
 
     //метод обновления продукта
-    @Transactional
     public void update(int id, Product_ru updatedProduct){
         updatedProduct.setId(id);
         updatedProduct.setUpdatedAt(new Date());
@@ -50,8 +47,12 @@ public class ProductsService {
     }
 
     //метод для удаления продукта
-    @Transactional
     public void delete(int id){
         productsRepository.deleteById(id);
+    }
+
+    //Поиск по имени или описанию
+    public List<Product_ru> findByNameOrDescription(String keyword){
+        return productsRepository.findByNameOrDescription(keyword);
     }
 }
