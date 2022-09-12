@@ -1,48 +1,25 @@
-package com.yula.app.storeapp.models;
+package com.yula.app.storeapp.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.yula.app.storeapp.models.Product_ru;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
-@Entity
-public class Product_en {
+//@JsonIgnoreProperties(ignoreUnknown = true)
+public class ProductDTO_en {
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @Column(name = "name")
     private String name;
 
-    @Column(name = "description")
     private String description;
 
-    @Column(name = "price_usd")
     private int price_usd;
 
-    @OneToOne(mappedBy = "product_en", cascade = CascadeType.ALL)
-    @JsonIgnore
     private Product_ru product_ru;
-
-    public Product_en() {
-    }
-
-    public Product_en(String name, String description, int price_usd) {
-        this.name = name;
-        this.description = description;
-        this.price_usd = price_usd;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -76,4 +53,12 @@ public class Product_en {
         this.product_ru = product_ru;
     }
 
+    @Override
+    public String toString() {
+        return
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price_usd=" + price_usd
+                ;
+    }
 }

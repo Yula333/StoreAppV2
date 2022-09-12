@@ -1,17 +1,14 @@
 package com.yula.app.storeapp.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.yula.app.storeapp.models.Product_en;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-
-public class ProductDTO {
-    @NotBlank(message = "Name should not be empty")
+//@JsonIgnoreProperties(ignoreUnknown = true)
+public class ProductDTO_ru {
     private String name;
 
     private String description;
 
-    @Min(value = 1, message = "Price should be greater than 0")
     private int price;
 
     private Product_en product_en;
@@ -46,5 +43,13 @@ public class ProductDTO {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return  "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price
+                ;
     }
 }

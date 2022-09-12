@@ -6,19 +6,18 @@ import com.yula.app.storeapp.util.ProductNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProductsService {
+public class ProductsServiceImpl implements ProductsService{
 
     //внедрим репозиторий
     private final ProductsRepository productsRepository;
 
     @Autowired
-    public ProductsService(ProductsRepository productsRepository) {
+    public ProductsServiceImpl(ProductsRepository productsRepository) {
         this.productsRepository = productsRepository;
     }
 

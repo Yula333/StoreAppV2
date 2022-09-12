@@ -1,7 +1,7 @@
 package com.yula.app.storeapp.controllers;
 
 import com.yula.app.storeapp.models.Product_ru;
-import com.yula.app.storeapp.services.ProductsService;
+import com.yula.app.storeapp.services.ProductsServiceImpl;
 import com.yula.app.storeapp.util.ProductErrorResponse;
 import com.yula.app.storeapp.util.ProductNotCreatedException;
 import com.yula.app.storeapp.util.ProductNotFoundException;
@@ -19,23 +19,28 @@ import java.util.List;
 @RequestMapping("/api")
 public class ProductsController {
 
-    private final ProductsService productsService;
+    private final ProductsServiceImpl productsServiceImpl;
 
     @Autowired
-    public ProductsController(ProductsService productsService) {
-        this.productsService = productsService;
+    public ProductsController(ProductsServiceImpl productsServiceImpl) {
+        this.productsServiceImpl = productsServiceImpl;
     }
 
     //запрос всего списка продуктов
     @GetMapping("/products")
     public List<Product_ru> getProducts() {
-        return productsService.findAll();   //Jackson конвертирует эти объекты в JSON
+        return productsServiceImpl.findAll();   //Jackson конвертирует эти объекты в JSON
     }
 
     //запрос продукта по id
     @GetMapping("/products/{id}")
     public Product_ru getProduct(@PathVariable("id") int id){
-        return productsService.findOne(id);
+        return productsServiceImpl.findOne(id);
+    }
+
+    @GetMapping("/products/search/{keyword}")
+    public List<Product_ru> search (@PathVariable("keyword") String keyword){
+        return productsServiceImpl.findByNameOrDescription(keyword);
     }
 
     //создание и сохранение в БД нового продукта
@@ -54,7 +59,7 @@ public class ProductsController {
             throw new ProductNotCreatedException(errorMsg.toString());
         }
             //если продукт валидный сохраняем в БД
-        productsService.save(product_ru);
+        productsServiceImpl.save(product_ru);
         // отправляем HTTP ответ с пустым телом и статусом 200 - ОК
         return ResponseEntity.ok(HttpStatus.OK);
     }
@@ -75,7 +80,7 @@ public class ProductsController {
             throw new ProductNotCreatedException(errorMsg.toString());
         }
         //если продукт валидный обновляем в БД
-        productsService.update(product.getId(), product);
+        productsServiceImpl.update(product.getId(), product);
         // отправляем HTTP ответ с пустым телом и статусом 200 - ОК
         return ResponseEntity.ok(HttpStatus.OK);
     }
@@ -83,7 +88,7 @@ public class ProductsController {
     //удаление продукта по id
     @DeleteMapping("/products/{id}")
     public  ResponseEntity<HttpStatus> deleteProduct (@PathVariable("id") int id){
-        productsService.delete(id);
+        productsServiceImpl.delete(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 

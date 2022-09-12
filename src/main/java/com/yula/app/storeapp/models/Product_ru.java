@@ -110,4 +110,11 @@ public class Product_ru {
     public void setProduct_en(Product_en product_en) {
         this.product_en = product_en;
     }
+
+    @Override
+    public String toString() {
+        return "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price_rub=" + price_rub;
+    }
 }
