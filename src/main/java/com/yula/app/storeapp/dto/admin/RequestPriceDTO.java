@@ -1,22 +1,22 @@
-package com.yula.app.storeapp.dto.client;
+package com.yula.app.storeapp.dto.admin;
 
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
-public class ClientPriceDTO {
+public class RequestPriceDTO {
 
     @DecimalMin(value = "1.0", message = "Price should be greater than 0")
     private BigDecimal value;
     @NotNull
     private String currency_code;
 
-    public ClientPriceDTO(BigDecimal value, String currency_code) {
-        this.value = value;
-        this.currency_code = currency_code;
+    public RequestPriceDTO() {
     }
 
-    public ClientPriceDTO() {
+    public RequestPriceDTO(BigDecimal value, String currency_code) {
+        this.value = value;
+        this.currency_code = currency_code;
     }
 
     public BigDecimal getValue() {

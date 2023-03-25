@@ -16,7 +16,6 @@ public class StoreAppApplication {
     }
 
 
-
 //    @Bean
 //    public Docket swaggerConfiguration(){
 //        return new Docket(DocumentationType.SWAGGER_2)

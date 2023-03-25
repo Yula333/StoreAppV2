@@ -24,17 +24,13 @@ public class Translation {
     @Length(max = 300)
     private String description;
 
-    @Column(name = "language")
-    @NotBlank(message = "Language should not be empty")
-    private String language;
-
     @Column(name = "language_code")
     @NotBlank(message = "Language code should not be empty")
     private String language_code;
 
     @JsonBackReference
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="product_id", referencedColumnName = "id")
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
 
 //    @JsonIgnore
@@ -44,11 +40,10 @@ public class Translation {
     public Translation() {
     }
 
-    public Translation(Integer id, String name_prod, String description, String language, String language_code, Product product) {
+    public Translation(Integer id, String name_prod, String description, String language_code, Product product) {
         this.id = id;
         this.name_prod = name_prod;
         this.description = description;
-        this.language = language;
         this.language_code = language_code;
         this.product = product;
     }
@@ -75,14 +70,6 @@ public class Translation {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
     }
 
     public String getLanguage_code() {

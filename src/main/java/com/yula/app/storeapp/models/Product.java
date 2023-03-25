@@ -1,7 +1,6 @@
 package com.yula.app.storeapp.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -31,18 +30,18 @@ public class Product {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<Price> price;
+    private List<Price> prices;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<Translation> translation;
+    private List<Translation> translations;
 
     public Product() {
     }
 
     public Product(List<Price> price, List<Translation> translation) {
-        this.price = price;
-        this.translation = translation;
+        this.prices = price;
+        this.translations = translation;
     }
 
     public Integer getId() {
@@ -69,20 +68,20 @@ public class Product {
         this.updatedAt = updatedAt;
     }
 
-    public List<Price> getPrice() {
-        return price;
+    public List<Price> getPrices() {
+        return prices;
     }
 
-    public void setPrice(List<Price> price) {
-        this.price = price;
+    public void setPrices(List<Price> prices) {
+        this.prices = prices;
     }
 
-    public List<Translation> getTranslation() {
-        return translation;
+    public List<Translation> getTranslations() {
+        return translations;
     }
 
-    public void setTranslation(List<Translation> translation) {
-        this.translation = translation;
+    public void setTranslations(List<Translation> translations) {
+        this.translations = translations;
     }
 }
 

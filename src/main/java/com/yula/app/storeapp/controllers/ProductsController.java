@@ -1,10 +1,14 @@
 package com.yula.app.storeapp.controllers;
 
+import com.yula.app.storeapp.dto.admin.RequestProductDTO;
+import com.yula.app.storeapp.models.Price;
 import com.yula.app.storeapp.models.Product;
-import com.yula.app.storeapp.services.ProductsServiceImpl;
+import com.yula.app.storeapp.models.Translation;
+import com.yula.app.storeapp.services.ProductsService;
 import com.yula.app.storeapp.util.ProductErrorResponse;
 import com.yula.app.storeapp.util.ProductNotCreatedException;
 import com.yula.app.storeapp.util.ProductNotFoundException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +23,10 @@ import java.util.List;
 @RequestMapping("/api")
 public class ProductsController {
 
-    private final ProductsServiceImpl productsServiceImpl;
+    private final ProductsService productsServiceImpl;
 
     @Autowired
-    public ProductsController(ProductsServiceImpl productsServiceImpl) {
+    public ProductsController(ProductsService productsServiceImpl) {
         this.productsServiceImpl = productsServiceImpl;
     }
 
@@ -34,8 +38,8 @@ public class ProductsController {
 
     //запрос продукта по id
     @GetMapping("/products/{id}")
-    public Product getProduct(@PathVariable("id") int id){
-        return productsServiceImpl.findOne(id);
+    public Product getProduct(@PathVariable("id") int id) {
+        return productsServiceImpl.findByID(id);
     }
 
 //    @GetMapping("/products/search/{keyword}")
@@ -45,12 +49,12 @@ public class ProductsController {
 
     //создание и сохранение в БД нового продукта
     @PostMapping("/products")
-    public ResponseEntity<HttpStatus> create(@RequestBody @Valid Product product, BindingResult bindingResult){
+    public ResponseEntity<HttpStatus> create(@RequestBody @Valid Product product, BindingResult bindingResult) {
         // если продукт не корректный, не прошел валидацию
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             StringBuilder errorMsg = new StringBuilder();
             List<FieldError> errors = bindingResult.getFieldErrors();
-            for (FieldError error : errors){                                    //по каждой ошибке создадим сообщение
+            for (FieldError error : errors) {                                    //по каждой ошибке создадим сообщение
                 errorMsg.append(error.getField())                               //на каком поле совершена ошибка
                         .append(" - ").append(error.getDefaultMessage())        //сообщение какая ошибка
                         .append(";");
@@ -58,7 +62,7 @@ public class ProductsController {
             //выбросим исключение и пошлем клиенту JSON с ошибкой
             throw new ProductNotCreatedException(errorMsg.toString());
         }
-            //если продукт валидный сохраняем в БД
+        //если продукт валидный сохраняем в БД
         productsServiceImpl.save(product);
         // отправляем HTTP ответ с пустым телом и статусом 200 - ОК
         return ResponseEntity.ok(HttpStatus.OK);
@@ -66,12 +70,12 @@ public class ProductsController {
 
     //изменение продукта в БД
     @PutMapping("/products")
-    public ResponseEntity<HttpStatus> updateProduct(@RequestBody @Valid Product product, BindingResult bindingResult){
+    public ResponseEntity<HttpStatus> updateProduct(@RequestBody @Valid Product product, BindingResult bindingResult) {
         // если продукт не корректный, не прошел валидацию
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             StringBuilder errorMsg = new StringBuilder();
             List<FieldError> errors = bindingResult.getFieldErrors();
-            for (FieldError error : errors){                                    //по каждой ошибке создадим сообщение
+            for (FieldError error : errors) {                                    //по каждой ошибке создадим сообщение
                 errorMsg.append(error.getField())                               //на каком поле совершена ошибка
                         .append(" - ").append(error.getDefaultMessage())        //сообщение какая ошибка
                         .append(";");
@@ -87,7 +91,7 @@ public class ProductsController {
 
     //удаление продукта по id
     @DeleteMapping("/products/{id}")
-    public  ResponseEntity<HttpStatus> deleteProduct (@PathVariable("id") int id){
+    public ResponseEntity<HttpStatus> deleteProduct(@PathVariable("id") int id) {
         productsServiceImpl.delete(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
@@ -105,6 +109,18 @@ public class ProductsController {
         );
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    private static Product convertToProduct(RequestProductDTO requestProductDTO) {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.map(requestProductDTO.getPrice(), Price.class);
+        modelMapper.map(requestProductDTO.getTranslation(), Translation.class);
+        Product product = modelMapper.map(requestProductDTO, Product.class);
+        return product;
+    }
+
+    private void enrichProduct(Product product) {
+
     }
 
 }

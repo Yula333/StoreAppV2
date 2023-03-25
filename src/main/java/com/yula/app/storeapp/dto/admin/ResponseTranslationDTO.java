@@ -1,10 +1,10 @@
-package com.yula.app.storeapp.dto.client;
+package com.yula.app.storeapp.dto.admin;
 
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
 
-public class ClientTranslationDTO {
+public class ResponseTranslationDTO {
 
     @NotBlank(message = "Name should not be empty")
     @Length(max = 200)
@@ -16,10 +16,10 @@ public class ClientTranslationDTO {
     @NotBlank(message = "Language should not be empty")
     private String language_code;
 
-    public ClientTranslationDTO() {
+    public ResponseTranslationDTO() {
     }
 
-    public ClientTranslationDTO(String name_prod, String description, String language_code) {
+    public ResponseTranslationDTO(String name_prod, String description, String language_code) {
         this.name_prod = name_prod;
         this.description = description;
         this.language_code = language_code;

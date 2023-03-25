@@ -1,11 +1,10 @@
-package com.yula.app.storeapp.dto;
+package com.yula.app.storeapp.dto.admin;
 
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 
-public class TranslationDTO {
+public class RequestTranslationDTO {
 
     @NotBlank(message = "Name should not be empty")
     @Length(max = 200)
@@ -15,15 +14,15 @@ public class TranslationDTO {
     private String description;
 
     @NotBlank(message = "Language should not be empty")
-    private String language;
+    private String language_code;
 
-    public TranslationDTO() {
+    public RequestTranslationDTO() {
     }
 
-    public TranslationDTO(String name_prod, String description, String language) {
+    public RequestTranslationDTO(String name_prod, String description, String language_code) {
         this.name_prod = name_prod;
         this.description = description;
-        this.language = language;
+        this.language_code = language_code;
     }
 
     public String getName_prod() {
@@ -42,11 +41,11 @@ public class TranslationDTO {
         this.description = description;
     }
 
-    public String getLanguage() {
-        return language;
+    public String getLanguage_code() {
+        return language_code;
     }
 
-    public void setLanguage(String language) {
-        this.language = language;
+    public void setLanguage_code(String language_code) {
+        this.language_code = language_code;
     }
 }

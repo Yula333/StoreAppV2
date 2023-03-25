@@ -19,17 +19,13 @@ public class Price {
     @DecimalMin(value = "1.0", message = "Price should be greater than 0")
     private BigDecimal value;
 
-    @Column(name = "currency")
-    @NotNull
-    private String currency;
-
     @Column(name = "currency_code")
     @NotNull
     private String currency_code;
 
     @JsonBackReference
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="product_id", referencedColumnName = "id")
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
 
 //    @JsonBackReference
@@ -40,10 +36,9 @@ public class Price {
     public Price() {
     }
 
-    public Price(Integer id, BigDecimal value, String currency, String currency_code, Product product) {
+    public Price(Integer id, BigDecimal value, String currency_code, Product product) {
         this.id = id;
         this.value = value;
-        this.currency = currency;
         this.currency_code = currency_code;
         this.product = product;
     }
@@ -62,14 +57,6 @@ public class Price {
 
     public void setValue(BigDecimal value) {
         this.value = value;
-    }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
     }
 
     public String getCurrency_code() {

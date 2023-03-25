@@ -1,4 +1,4 @@
-package com.yula.app.storeapp.dto;
+package com.yula.app.storeapp.dto.admin;
 
 import com.yula.app.storeapp.models.Price;
 import com.yula.app.storeapp.models.Translation;
@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
-public class ProductDTO {
+public class ResponseProductDTO {
     @NotNull
     private Integer id;
 
@@ -17,15 +17,15 @@ public class ProductDTO {
     private Date updatedAt;
 
     @NotBlank
-private List<Price> price;
+    private List<ResponsePriceDTO> price;
 
     @NotBlank
-    private List<Translation> translation;
+    private List<ResponseTranslationDTO> translation;
 
-    public ProductDTO() {
+    public ResponseProductDTO() {
     }
 
-    public ProductDTO(Integer id, Date createdAt, Date updatedAt, List<Price> price, List<Translation> translation) {
+    public ResponseProductDTO(Integer id, Date createdAt, Date updatedAt, List<ResponsePriceDTO> price, List<ResponseTranslationDTO> translation) {
         this.id = id;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -57,19 +57,19 @@ private List<Price> price;
         this.updatedAt = updatedAt;
     }
 
-    public List<Price> getPrice() {
+    public List<ResponsePriceDTO> getPrice() {
         return price;
     }
 
-    public void setPrice(List<Price> price) {
+    public void setPrice(List<ResponsePriceDTO> price) {
         this.price = price;
     }
 
-    public List<Translation> getTranslation() {
+    public List<ResponseTranslationDTO> getTranslation() {
         return translation;
     }
 
-    public void setTranslation(List<Translation> translation) {
+    public void setTranslation(List<ResponseTranslationDTO> translation) {
         this.translation = translation;
     }
 }
