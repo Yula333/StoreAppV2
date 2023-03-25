@@ -23,23 +23,23 @@ import java.util.List;
 @RequestMapping("/api")
 public class ProductsController {
 
-    private final ProductsService productsServiceImpl;
+    private final ProductsService productsService;
 
     @Autowired
-    public ProductsController(ProductsService productsServiceImpl) {
-        this.productsServiceImpl = productsServiceImpl;
+    public ProductsController(ProductsService productsService) {
+        this.productsService = productsService;
     }
 
     //запрос всего списка продуктов
     @GetMapping("/products")
     public List<Product> getProducts() {
-        return productsServiceImpl.findAll();   //Jackson конвертирует эти объекты в JSON
+        return productsService.findAll();   //Jackson конвертирует эти объекты в JSON
     }
 
     //запрос продукта по id
     @GetMapping("/products/{id}")
     public Product getProduct(@PathVariable("id") int id) {
-        return productsServiceImpl.findByID(id);
+        return productsService.findByID(id);
     }
 
 //    @GetMapping("/products/search/{keyword}")
@@ -63,7 +63,7 @@ public class ProductsController {
             throw new ProductNotCreatedException(errorMsg.toString());
         }
         //если продукт валидный сохраняем в БД
-        productsServiceImpl.save(product);
+        productsService.save(product);
         // отправляем HTTP ответ с пустым телом и статусом 200 - ОК
         return ResponseEntity.ok(HttpStatus.OK);
     }
@@ -84,7 +84,7 @@ public class ProductsController {
             throw new ProductNotCreatedException(errorMsg.toString());
         }
         //если продукт валидный обновляем в БД
-        productsServiceImpl.update(product.getId(), product);
+        productsService.update(product.getId(), product);
         // отправляем HTTP ответ с пустым телом и статусом 200 - ОК
         return ResponseEntity.ok(HttpStatus.OK);
     }
@@ -92,7 +92,7 @@ public class ProductsController {
     //удаление продукта по id
     @DeleteMapping("/products/{id}")
     public ResponseEntity<HttpStatus> deleteProduct(@PathVariable("id") int id) {
-        productsServiceImpl.delete(id);
+        productsService.delete(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
