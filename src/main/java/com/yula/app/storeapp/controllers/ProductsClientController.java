@@ -2,7 +2,11 @@ package com.yula.app.storeapp.controllers;
 
 import com.yula.app.storeapp.models.Product;
 import com.yula.app.storeapp.services.ClientProductService;
+import com.yula.app.storeapp.util.ProductErrorResponse;
+import com.yula.app.storeapp.util.ProductNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
@@ -35,4 +39,5 @@ public class ProductsClientController {
     public List<Product> searchProducts(@RequestParam("currency_code") @NotBlank String currency_code, @RequestParam("language_code") @NotBlank String language_code, @RequestParam("keyword") @NotBlank String keyword) {
         return clientProductService.findByNameOrDescription(currency_code, language_code, keyword);
     }
+    
 }

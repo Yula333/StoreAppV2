@@ -17,6 +17,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.Validator;
 import java.util.List;
 
 @RestController     //@Controller + @ResponseBody над каждым методом
@@ -42,15 +43,11 @@ public class ProductsController {
         return productsService.findByID(id);
     }
 
-//    @GetMapping("/products/search/{keyword}")
-//    public List<Product> search (@PathVariable("keyword") String keyword){
-//        return productsServiceImpl.findByNameOrDescription(keyword);
-//    }
 
     //создание и сохранение в БД нового продукта
     @PostMapping("/products")
-    public ResponseEntity<HttpStatus> create(@RequestBody @Valid Product product, BindingResult bindingResult) {
-        // если продукт не корректный, не прошел валидацию
+    public ResponseEntity<HttpStatus> create(@RequestBody @Valid Product product, Price price, BindingResult bindingResult) {
+        // сообщение об ошибке, если продукт не корректный, не прошел валидацию
         if (bindingResult.hasErrors()) {
             StringBuilder errorMsg = new StringBuilder();
             List<FieldError> errors = bindingResult.getFieldErrors();
@@ -94,21 +91,6 @@ public class ProductsController {
     public ResponseEntity<HttpStatus> deleteProduct(@PathVariable("id") int id) {
         productsService.delete(id);
         return ResponseEntity.ok(HttpStatus.OK);
-    }
-
-    @ExceptionHandler
-    private ResponseEntity<ProductErrorResponse> handleException(ProductNotFoundException e) {
-        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);    //  NOT_FOUND - 404 статус
-    }
-
-    @ExceptionHandler
-    private ResponseEntity<ProductErrorResponse> handleException(ProductNotCreatedException e) {
-        ProductErrorResponse response = new ProductErrorResponse(
-                e.getMessage()
-//                HttpStatus.BAD_REQUEST.value()
-        );
-
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     private static Product convertToProduct(RequestProductDTO requestProductDTO) {

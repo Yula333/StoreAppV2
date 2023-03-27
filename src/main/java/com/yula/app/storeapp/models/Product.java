@@ -39,6 +39,14 @@ public class Product {
     public Product() {
     }
 
+    public Product(Integer id, Date createdAt, Date updatedAt, List<Price> prices, List<Translation> translations) {
+        this.id = id;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.prices = prices;
+        this.translations = translations;
+    }
+
     public Product(List<Price> price, List<Translation> translation) {
         this.prices = price;
         this.translations = translation;

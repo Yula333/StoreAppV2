@@ -33,10 +33,6 @@ public class Translation {
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
 
-//    @JsonIgnore
-//    @OneToOne(mappedBy = "translation")
-//    private Price price;
-
     public Translation() {
     }
 

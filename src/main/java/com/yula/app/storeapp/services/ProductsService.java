@@ -17,8 +17,6 @@ public class ProductsService implements ProductsServiceInterface {
 
     //внедрим репозиторий
     private final ProductsRepository productsRepository;
-//    private final PriceRepository priceRepository;
-//    private final TranslationRepository translationRepository;
 
     @Autowired
     public ProductsService(ProductsRepository productsRepository) {
@@ -54,8 +52,4 @@ public class ProductsService implements ProductsServiceInterface {
         productsRepository.deleteById(id);
     }
 
-    //Поиск по имени или описанию
-//    public List<Product> findByNameOrDescription(String keyword){
-//        return productsRepository.findByNameOrDescription(keyword);
-//    }
 }

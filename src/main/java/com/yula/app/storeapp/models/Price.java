@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
@@ -16,6 +17,7 @@ public class Price {
     private Integer id;
 
     @Column(name = "value")
+    @NotBlank
     @DecimalMin(value = "1.0", message = "Price should be greater than 0")
     private BigDecimal value;
 
@@ -27,11 +29,6 @@ public class Price {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
-
-//    @JsonBackReference
-//    @OneToOne
-//    @JoinColumn(name="translation_id", referencedColumnName = "id")
-//    private Translation translation;
 
     public Price() {
     }
