@@ -2,6 +2,8 @@ package com.yula.app.storeapp.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -9,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@ApiModel(value = "class product")
 public class Product {
 
     @Id
@@ -20,6 +23,7 @@ public class Product {
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd/MM/yyyy")     // дд/мм/гггг
     @JsonFormat(pattern = "dd/MM/yyyy")
+    @ApiModelProperty(value = "date of created")
     private Date createdAt;
 
     @Column(name = "updated_at")
