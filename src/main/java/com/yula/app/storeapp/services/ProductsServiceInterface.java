@@ -16,7 +16,4 @@ public interface ProductsServiceInterface {
 
     public void delete(int id);
 
-    //Поиск по имени или описанию
-//    public List<Product> findByNameOrDescription(String keyword);
-
 }

@@ -2,16 +2,12 @@ package com.yula.app.storeapp.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.Length;
 
 @Entity
-@ApiModel(value = "class translation")
 public class Translation {
     @Id
     @Column(name = "id")
@@ -19,19 +15,16 @@ public class Translation {
     private Integer id;
 
     @Column(name = "name_prod")
-    @NotBlank(message = "Name should not be empty")
+    @NotNull(message = "Name should not be empty")
     @Length(max = 200)
-    @ApiModelProperty(value = "name of product")
     private String name_prod;
 
     @Column(name = "description")
     @Length(max = 300)
-    @ApiModelProperty(value = "description of product")
     private String description;
 
     @Column(name = "language_code")
     @NotBlank(message = "Language code should not be empty")
-    @ApiModelProperty(value = "language")
     private String language_code;
 
     @JsonBackReference

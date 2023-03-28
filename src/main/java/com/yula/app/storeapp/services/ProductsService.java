@@ -1,9 +1,7 @@
 package com.yula.app.storeapp.services;
 
 import com.yula.app.storeapp.models.Product;
-import com.yula.app.storeapp.repositories.PriceRepository;
 import com.yula.app.storeapp.repositories.ProductsRepository;
-import com.yula.app.storeapp.repositories.TranslationRepository;
 import com.yula.app.storeapp.util.ProductNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

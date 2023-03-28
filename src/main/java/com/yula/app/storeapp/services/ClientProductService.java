@@ -4,6 +4,7 @@ import com.yula.app.storeapp.models.Product;
 import com.yula.app.storeapp.repositories.ProductsRepository;
 import com.yula.app.storeapp.util.ProductNotFoundExceptionCodeMsg;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,8 +20,12 @@ public class ClientProductService implements ClientProductServiceInterface {
         this.productsRepository = productsRepository;
     }
 
-    public List<Product> findAll(String currency_code, String language_code) {
-        return productsRepository.findAllProducts(currency_code, language_code);
+    public List<Product> findAll(String currency_code, String language_code, PageRequest pageRequest) {
+        List<Product> prodList = productsRepository.findAllByPageRequest(currency_code, language_code, pageRequest);
+        if (prodList.isEmpty()) {
+            throw new ProductNotFoundExceptionCodeMsg();
+        }
+        return prodList;
     }
 
     public Product findByID(Integer id, String currency_code, String language_code) {
@@ -29,7 +34,11 @@ public class ClientProductService implements ClientProductServiceInterface {
     }
 
     @Override
-    public List<Product> findByNameOrDescription(String currency_code, String language_code, String keyword) {
-        return productsRepository.findByKeyword(currency_code, language_code, keyword);
+    public List<Product> findByNameOrDescription(String currency_code, String language_code, String keyword, PageRequest pageRequest) {
+        List<Product> prodList = productsRepository.findByKeywordByPageRequest(currency_code, language_code, keyword, pageRequest);
+        if (prodList.isEmpty()) {
+            throw new ProductNotFoundExceptionCodeMsg();
+        }
+        return prodList;
     }
 }

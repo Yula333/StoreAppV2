@@ -1,17 +1,12 @@
 package com.yula.app.storeapp.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 
 @Entity
-@ApiModel(value = "class price")
 public class Price {
 
     @Id
@@ -20,14 +15,13 @@ public class Price {
     private Integer id;
 
     @Column(name = "value")
-    @NotBlank
-    @ApiModelProperty(value = "price of product")
+    @NotNull
+    @NotEmpty
     @DecimalMin(value = "1.0", message = "Price should be greater than 0")
     private BigDecimal value;
 
     @Column(name = "currency_code")
-    @NotNull
-    @ApiModelProperty(value = "currency")
+    @NotBlank
     private String currency_code;
 
     @JsonBackReference

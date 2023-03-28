@@ -4,8 +4,6 @@ import com.yula.app.storeapp.dto.admin.RequestProductDTO;
 import com.yula.app.storeapp.models.*;
 import com.yula.app.storeapp.services.ProductsService;
 import com.yula.app.storeapp.util.ProductNotCreatedException;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +17,7 @@ import java.util.List;
 
 @RestController     //@Controller + @ResponseBody над каждым методом
 @RequestMapping("/api")
-@Api(value = "product resources")
+//@Api(value = "product resources")
 public class ProductsController {
 
     private final ProductsService productsService;
@@ -31,14 +29,13 @@ public class ProductsController {
 
     //запрос всего списка продуктов
     @GetMapping("/products")
-    @ApiOperation(value = "show all products", response = Product.class)
+//    @ApiOperation(value = "show all products", response = Product.class)
     public List<Product> getProducts() {
         return productsService.findAll();   //Jackson конвертирует эти объекты в JSON
     }
 
     //запрос продукта по id
     @GetMapping("/products/{id}")
-    @ApiOperation(value = "show product by ID", response = Product.class)
     public Product getProduct(@PathVariable("id") int id) {
         return productsService.findByID(id);
     }
@@ -46,8 +43,7 @@ public class ProductsController {
 
     //создание и сохранение в БД нового продукта
     @PostMapping("/products")
-    @ApiOperation(value = "create product")
-    public ResponseEntity<HttpStatus> create(@RequestBody @Valid Product product, Price price, BindingResult bindingResult) {
+    public ResponseEntity<HttpStatus> create(@RequestBody @Valid Product product, BindingResult bindingResult) {
         // сообщение об ошибке, если продукт не корректный, не прошел валидацию
         if (bindingResult.hasErrors()) {
             StringBuilder errorMsg = new StringBuilder();
@@ -68,7 +64,6 @@ public class ProductsController {
 
     //изменение продукта в БД
     @PutMapping("/products")
-    @ApiOperation(value = "update product")
     public ResponseEntity<HttpStatus> updateProduct(@RequestBody @Valid Product product, BindingResult bindingResult) {
         // если продукт не корректный, не прошел валидацию
         if (bindingResult.hasErrors()) {
@@ -90,7 +85,6 @@ public class ProductsController {
 
     //удаление продукта по id
     @DeleteMapping("/products/{id}")
-    @ApiOperation(value = "delete product")
     public ResponseEntity<HttpStatus> deleteProduct(@PathVariable("id") int id) {
         productsService.delete(id);
         return ResponseEntity.ok(HttpStatus.OK);
